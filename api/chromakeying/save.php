@@ -7,10 +7,8 @@ require_once '../../lib/boot.php';
 use Photobooth\Enum\FolderEnum;
 use Photobooth\Image;
 use Photobooth\Enum\ImageFilterEnum;
-use Photobooth\FileDelete;
 use Photobooth\PhotoboothCapture;
 use Photobooth\Service\DatabaseManagerService;
-use Photobooth\Service\ImageMetadataCacheService;
 use Photobooth\Service\LoggerService;
 use Photobooth\Utility\ImageUtility;
 
@@ -53,25 +51,6 @@ if ($config['database']['file'] != 'db') {
 
 if ($saveCopy) {
     $file = $imageHandler->createNewFilename($config['picture']['naming']);
-    if (!$config['keying']['show_all']) {
-        $database->deleteContentFromDB($_POST['file']);
-
-        if (!$config['picture']['keep_original']) {
-            $paths = [
-                FolderEnum::IMAGES->absolute(),
-                FolderEnum::THUMBS->absolute(),
-                FolderEnum::KEYING->absolute(),
-                FolderEnum::TEMP->absolute(),
-            ];
-            $delete = new FileDelete($_POST['file'], $paths, (bool) $config['picture']['keep_original']);
-            $delete->deleteFiles();
-            $logger->debug('delete', $delete->getLogData());
-
-            // Remove cached metadata for this file and its thumb, if present
-            ImageMetadataCacheService::getInstance()->remove(FolderEnum::IMAGES->absolute() . DIRECTORY_SEPARATOR . $_POST['file']);
-            ImageMetadataCacheService::getInstance()->remove(FolderEnum::THUMBS->absolute() . DIRECTORY_SEPARATOR . $_POST['file']);
-        }
-    }
 }
 
 $filename_tmp = FolderEnum::TEMP->absolute() . DIRECTORY_SEPARATOR . $file;
@@ -80,6 +59,7 @@ $filename_thumb = FolderEnum::THUMBS->absolute() . DIRECTORY_SEPARATOR . $file;
 $filename_keying = FolderEnum::KEYING->absolute() . DIRECTORY_SEPARATOR . $file;
 $picture_permissions = $config['picture']['permissions'];
 $thumb_size = substr($config['picture']['thumb_size'], 0, -2);
+$imageResource = null;
 
 try {
     $captureHandler = new PhotoboothCapture();

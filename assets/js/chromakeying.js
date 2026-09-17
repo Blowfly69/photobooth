@@ -373,6 +373,7 @@ $(function () {
         });
 
         setTimeout(function () {
+            setChromaImage(config.background.chroma);
             processChromaImage($('body').attr('data-main-image'));
         }, 100);
 

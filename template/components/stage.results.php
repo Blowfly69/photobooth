@@ -32,6 +32,9 @@ if ($config['ui']['result_buttons']) {
     if ($config['gallery']['enabled']) {
         echo ComponentUtility::renderButton('gallery', $config['icons']['gallery'], 'gallerybtn');
     }
+    if ($config['keying']['enabled']) {
+        echo ComponentUtility::renderButton('chroma', $config['icons']['chroma'], 'chromabtn');
+    }
     if ($config['mail']['enabled']) {
         echo ComponentUtility::renderButton('mail', $config['icons']['mail'], 'mailbtn');
     }

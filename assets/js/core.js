@@ -1319,6 +1319,15 @@ const photoBooth = (function () {
             });
 
         resultPage
+            .find('[data-command="chromabtn"]')
+            .off('click')
+            .on('click', (event) => {
+                event.preventDefault();
+                window.location.href =
+                    environment.publicFolders.chroma + '/chromakeying.php?filename=' + encodeURIComponent(filename);
+            });
+
+        resultPage
             .find('.deletebtn')
             .off('click')
             .on('click', async (ev) => {
