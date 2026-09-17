@@ -72,11 +72,38 @@ class PhotoboothCapture
     {
         $this->logger->debug('Capture Canvas');
         try {
-            list($type, $data) = explode(';', $data);
-            list(, $data) = explode(',', $data);
-            $data = base64_decode($data);
+            $dataParts = explode(',', $data, 2);
+            if (count($dataParts) !== 2 || !str_contains($dataParts[0], ';base64')) {
+                throw new \Exception('Invalid canvas data URL.');
+            }
 
-            file_put_contents($this->tmpFile, $data);
+            $imageData = base64_decode($dataParts[1], true);
+            if ($imageData === false || $imageData === '') {
+                throw new \Exception('Invalid canvas image data.');
+            }
+
+            $imageInfo = @getimagesizefromstring($imageData);
+            if ($imageInfo === false) {
+                throw new \Exception('Canvas data is not a supported image.');
+            }
+
+            if ($imageInfo[2] === IMAGETYPE_JPEG) {
+                if (file_put_contents($this->tmpFile, $imageData) === false) {
+                    throw new \Exception('Failed to save canvas image.');
+                }
+            } else {
+                $image = @imagecreatefromstring($imageData);
+                if (!$image instanceof \GdImage) {
+                    throw new \Exception('Failed to decode canvas image data.');
+                }
+
+                if (!imagejpeg($image, $this->tmpFile, 100)) {
+                    imagedestroy($image);
+                    throw new \Exception('Failed to save canvas image.');
+                }
+
+                imagedestroy($image);
+            }
 
             if ($this->flipImage != 'off') {
                 $imageHandler = new Image();

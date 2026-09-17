@@ -449,6 +449,16 @@ class Image
                     break;
             }
             if (!$resource) {
+                $gdInfo = function_exists('gd_info') ? gd_info() : [];
+                $details = [
+                    'file' => $image,
+                    'extension' => $extension,
+                    'fileSize' => is_file($image) ? filesize($image) : false,
+                    'memoryLimit' => ini_get('memory_limit'),
+                    'memoryUsage' => memory_get_usage(true),
+                    'jpegSupport' => $gdInfo['JPEG Support'] ?? 'unknown',
+                ];
+                $this->addErrorData($details);
                 throw new \Exception('Can\'t create GD resource.');
             }
             return $resource;

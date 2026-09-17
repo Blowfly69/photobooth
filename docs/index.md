@@ -14,6 +14,7 @@ Photobooth turns a connected camera and screen into an offline-friendly photo bo
 - Install & setup: begin with the [prerequisites](install/prerequisites.md) and pick an [install guide](install/index.md) for your platform.
 - Upgrade: follow the [update guide for Linux](update/update-linux.md) and check the [changelog](changelog.md) for release details.
 - Customize: tweak sounds, themes and styles in [Customizing](customizing/index.md).
+- Develop: configure [remote PHP debugging](development/remote-php-debugging.md) with Xdebug and VS Code.
 - Troubleshoot: find answers in the [FAQ](faq/index.md) and [tutorials](faq/tutorials.md).
 - Community: join the [Telegram chat](https://t.me/PhotoboothGroup) or read the [code of conduct](code_of_conduct.md).
 

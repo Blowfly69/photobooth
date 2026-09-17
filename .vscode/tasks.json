@@ -1,0 +1,25 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Open reverse Xdebug SSH tunnel",
+            "type": "shell",
+            "command": "ssh -N -R 9003:127.0.0.1:9003 ${input:sshTarget}",
+            "isBackground": true,
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "close": false
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "sshTarget",
+            "type": "promptString",
+            "description": "SSH target (user@remote-host)",
+            "default": "lugauer@192.168.66.73"
+        }
+    ]
+}

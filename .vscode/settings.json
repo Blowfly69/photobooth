@@ -1,0 +1,4 @@
+{
+    "photobooth.remotePath": "/var/www/html",
+    "php.validate.enable": true
+}

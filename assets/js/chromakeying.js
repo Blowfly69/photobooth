@@ -159,7 +159,13 @@ function drawCanvas(save = false, filename = '') {
                 mainImage.width,
                 mainImage.height
             );
-            chromaCanvasContext.drawImage(backgroundImage, 0, 0, size.width, size.height);
+            chromaCanvasContext.drawImage(
+                backgroundImage,
+                (chromaCanvas.width - size.width) / 2,
+                (chromaCanvas.height - size.height) / 2,
+                size.width,
+                size.height
+            );
         } else {
             chromaCanvasContext.drawImage(backgroundImage, 0, 0, backgroundImage.width, backgroundImage.height);
         }
@@ -197,6 +203,11 @@ function clearCanvasAndLoadImage(imageUrl) {
 }
 
 function saveImage(filename, cb) {
+    if (!backgroundImage || !backgroundImage.complete || backgroundImage.naturalWidth === 0) {
+        photoboothTools.console.logDev('Please wait until the background image has loaded.');
+        return;
+    }
+
     const dataURL = chromaCanvas.toDataURL('image/png');
     $.ajax({
         method: 'POST',
