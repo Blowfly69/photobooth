@@ -232,6 +232,7 @@
   "ftp:username": "Benutzername",
   "ftp:website": "Webseite",
   "gallery": "Galerie",
+  "background": "Hintergrund",
   "gallery_no_image": "Die Galerie ist noch leer. Mache doch ein paar Bilder!",
   "gallery:gallery_allow_delete": "Löschen von Bildern aus der Galerie zulassen",
   "gallery:gallery_bottom_bar": "Schaltflächenleiste in der Galerie unten anzeigen",

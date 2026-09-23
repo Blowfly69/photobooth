@@ -233,6 +233,7 @@
   "ftp:username": "Username",
   "ftp:website": "Website",
   "gallery": "Gallery",
+  "background": "Background",
   "gallery_no_image": "The gallery is still empty. Take some pictures!",
   "gallery:gallery_allow_delete": "Allow deletion of images from gallery",
   "gallery:gallery_bottom_bar": "Show button bar inside gallery on bottom",
